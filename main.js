@@ -1,27 +1,23 @@
 $(document).ready(function(){
   //Start point fadeIn of the site
-  $('.quotegroup').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 3000);
+  $('.quotegroup').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 2000);
 
   //Ajax Request
   $('.btn').on('click', function(){
-    $.ajax('http://quotes.stormconsultancy.co.uk/quotes.json', {
+    $.ajax('https://andruxnet-random-famous-quotes.p.mashape.com/cat=famous', {
       type: 'GET',
       data: 'null',
       dataType: 'json',
-      success: function(data){
-        var randomIndex = Math.floor(Math.random() * data.length);
-        $.each(data, function(i){
-          if(randomIndex === data[i]['id']){
-            $('.quotegroup').fadeOut(1000, function(){
-              $('#quote').text(data[i]['quote']);
-              $('#author').text(data[i]['author']);
-              $(this).fadeIn(1000);
-            });
-          }
+      success: function(response){
+        $('.quotegroup').fadeOut(1000, function(){
+          $('#quote').text(response.quote);
+          $('#author').text(response.author);
+          $(this).fadeIn(1000);
         });
       },
-      error: function(request, errorType, errorMessage){
-        alert('Error: ' + errorType + ' with message: ' + errorMessage);
+      error: function(err) { alert(err); },
+      beforeSend: function(xhr) {
+      xhr.setRequestHeader("X-Mashape-Authorization", "2W1js31pYJmshjhSeK7bv8Sb4SIgp1HPxkDjsnxBZqr7ZhGKZ2"); // Enter here your Mashape key
       }
     });
   });
