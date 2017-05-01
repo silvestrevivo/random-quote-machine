@@ -3,7 +3,7 @@ $(document).ready(function(){
   $('.quotegroup').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 2000);
 
   //Ajax Request
-  $('.btn').on('click', function(){
+  $('.btn-quotes').on('click', function(){
     $.ajax('https://andruxnet-random-famous-quotes.p.mashape.com/cat=famous', {
       type: 'GET',
       data: 'null',
@@ -23,7 +23,7 @@ $(document).ready(function(){
   });
 
   //Change color&background-color
-  $('.btn').on('click', function(){
+  $('.btn-quotes').on('click', function(){
     var letters = '0123456789ABCDEF';
     var color = '#';
     for (var i = 0; i < 6; i++ ) {
@@ -32,5 +32,12 @@ $(document).ready(function(){
     $('body, .btn').css('background-color', color);
     $('.quotegroup').find('p').css('color', color);
     $('.quotegroup').find('footer').css('color', color);
+  });
+
+  //Tweet API
+  $('.btn-twitter').on('click', function(event){
+    event.preventDefault();
+    var quote = $('#quote').text();
+    window.open('https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' + quote);
   });
 });
